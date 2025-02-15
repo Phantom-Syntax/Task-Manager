@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8fafc; /* Tailwind gray-100 */
+        }
+        .form-container {
+            width: 600px; /* Increase the width of the form */
+        }
+        .center-button {
+            display: flex;
+            justify-content: center; /* Center-align the button within the form container */
+        }
+    </style>
+</head>
+<body>
+    <div class="center-content">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Register</h1>
+        <form method="post" class="bg-white p-6 rounded-lg shadow-md form-container">
+            {% csrf_token %}
+            {% for fm in form %}
+                <div class="form-group row mb-4 align-items-center"> <!-- Added align-items-center for better alignment -->
+                    <label for="{{ fm.id_for_label }}" class="col-sm-3 col-form-label">{{ fm.label }}</label>
+                    <div class="col-sm-9">
+                        {{ fm }}
+                        {% if fm.errors %}
+                            <div class="text-red-500 text-sm mt-1">{{ fm.errors|first }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form-group row">
+                <div class="col-sm-12 center-button"> <!-- Center the button within the form container -->
+                    <button type="submit" class="btn btn-primary btn-md mt-4">Register</button> <!-- Medium button using btn-md class -->
+
+                </div>
+            </div>
+        <br>
+        <div class="center-button">
+        <a href="{% url 'login' %}">Already signed up?</a>
+        </div>
+        </form>
+
+        {% if messages %}
+            <div class="mt-4">
+                {% for message in messages %}
+                    <div class="alert alert-info">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+
